@@ -1,0 +1,73 @@
+{% load tailwind_tags %}
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | V-Dashboard</title>
+    {% tailwind_css %}
+  </head>
+  <body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-6 lg:p-10 rounded-xl shadow-xl w-full max-w-md">
+      <div class="flex items-center justify-center gap-2 mb-6 lg:mb-8 text-[#4F46E5]">
+        <svg class="w-6 h-6 lg:w-8 lg:h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+        </svg>
+        <span class="text-xl lg:text-2xl font-bold text-black">V-Dashboard</span>
+      </div>
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          <p class="font-bold">Lỗi đăng nhập:</p>
+          <ul class="list-disc list-inside">
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        
+        {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %}
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-black"
+            >Username</label
+          >
+          <input
+            type="text"
+            name="username"
+            value="{{ form.username.value|default:'' }}"
+            required
+            class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 outline-none text-black"
+          />
+        </div>
+
+        <div class="mb-4 lg:mb-6">
+          <label class="block text-sm font-medium text-black"
+            >Password</label
+          >
+          <input
+            type="password"
+            name="password"
+            required
+            class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 outline-none text-black"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition text-sm lg:text-base"
+        >
+          Sign in
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

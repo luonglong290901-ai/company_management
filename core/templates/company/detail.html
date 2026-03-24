@@ -1,0 +1,202 @@
+{% extends 'base.html' %} {% block content %}
+<div class="mx-auto w-full max-w-5xl p-4 lg:p-6">
+  <!-- Company Details -->
+  <div
+    class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8"
+  >
+    <div
+      class="mb-6 lg:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+    >
+      <div>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">
+          {{ company.company_name }}
+        </h2>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <a
+          href="{% url 'company_list' %}"
+          class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm lg:text-base text-center"
+          >Back to list</a
+        >
+        <a
+          href="{% url 'company_edit' company.pk %}"
+          class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base text-center"
+          >Edit</a
+        >
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      <!-- Column 1 -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Tên tiếng Anh</label>
+          <p class="text-slate-900">{{ company.english_name|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Điện thoại</label>
+          <p class="text-slate-900">{{ company.phone|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Mã số thuế</label>
+          <p class="text-slate-900">{{ company.tax_code|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Ngành</label>
+          <p class="text-slate-900">{{ company.industry|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Quy mô</label>
+          <p class="text-slate-900">{{ company.scale|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Vốn điều lệ</label>
+          <p class="text-slate-900">{{ company.capital|default:"N/A" }}</p>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Địa chỉ</label>
+          <p class="text-slate-900">{{ company.address|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Website</label>
+          <p class="text-slate-900">
+            {% if company.website %}
+            <a href="{{ company.website }}" target="_blank" class="text-indigo-600 hover:text-indigo-800">{{ company.website }}</a>
+            {% else %}N/A{% endif %}
+          </p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Doanh thu</label>
+          <p class="text-slate-900">{{ company.revenue|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Đại diện pháp luật</label>
+          <p class="text-slate-900">{{ company.legal_representative|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Ngày hoạt động</label>
+          <p class="text-slate-900">{{ company.operation_date|date:"d/m/Y"|default:"N/A" }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Chủ sở hữu</label>
+          <p class="text-slate-900">{{ company.owner|default:"N/A" }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Section -->
+    {% if company.notes %}
+    <div class="mt-6 pt-6 border-t border-slate-200">
+      <h3 class="text-lg font-bold text-slate-800 mb-3">Ghi chú</h3>
+      <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+        <p class="text-slate-700 whitespace-pre-wrap">{{ company.notes }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Additional Info -->
+    <div class="mt-6 pt-6 border-t border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      {% if company.main_customer %}
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Khách hàng chính</label>
+        <p class="text-slate-700 whitespace-pre-wrap bg-slate-50 p-3 rounded">{{ company.main_customer }}</p>
+      </div>
+      {% endif %}
+      {% if company.branches_in_vn %}
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Chi nhánh tại VN</label>
+        <p class="text-slate-700 whitespace-pre-wrap bg-slate-50 p-3 rounded">{{ company.branches_in_vn }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <!-- Contacts Section -->
+  <div
+    class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8 mt-6 lg:mt-8"
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+      <h3 class="text-lg lg:text-xl font-bold text-slate-800 text-black">
+        Danh sách liên hệ
+      </h3>
+      <a
+        href="{% url 'contact_add' company.pk %}"
+        class="px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm lg:text-base text-center mt-2 sm:mt-0"
+        >Add Contact</a
+      >
+    </div>
+    {% if company.contacts.all %}
+    <!-- Desktop Table -->
+    <div class="hidden lg:block overflow-x-auto">
+      <table class="w-full border-collapse border border-slate-300">
+        <thead>
+          <tr class="bg-slate-50">
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Tên</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Email</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">
+              Điện thoại
+            </th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Chức vụ</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in company.contacts.all %}
+          <tr class="hover:bg-slate-50">
+            <td class="border border-slate-300 px-4 py-2 text-black">
+              {{ contact.contact_name }}
+            </td>
+            <td class="border border-slate-300 px-4 py-2 text-black">
+              {{ contact.email }}
+            </td>
+            <td class="border border-slate-300 px-4 py-2 text-black">
+              {{ contact.phone }}
+            </td>
+            <td class="border border-slate-300 px-4 py-2 text-black">
+              {{ contact.position }}
+            </td>
+            <td class="border border-slate-300 px-4 py-2">
+              <div class="flex gap-2">
+                <a href="{% url 'contact_edit' contact.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                <button type="button" onclick="openDeleteModal('{% url 'contact_delete' contact.pk %}', 'Liên hệ {{ contact.contact_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="lg:hidden space-y-4">
+      {% for contact in company.contacts.all %}
+      <div class="border border-slate-200 rounded-lg p-4">
+        <h4 class="font-medium text-black mb-2">
+          {{ contact.contact_name }}
+        </h4>
+        <div class="space-y-1 text-sm text-black">
+          <div><span class="font-medium">Email:</span> {{ contact.email }}</div>
+          <div><span class="font-medium">Phone:</span> {{ contact.phone }}</div>
+          <div>
+            <span class="font-medium">Position:</span> {{ contact.position }}
+          </div>
+        </div>
+        <div class="flex gap-3 mt-2">
+          <a href="{% url 'contact_edit' contact.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+          <button type="button" onclick="openDeleteModal('{% url 'contact_delete' contact.pk %}', 'Liên hệ {{ contact.contact_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-slate-500 italic">
+      Chưa có liên hệ nào được thêm cho công ty này.
+    </p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

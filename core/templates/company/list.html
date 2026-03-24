@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h2 class="text-xl lg:text-2xl font-bold text-slate-800">Company List</h2>
+            <p class="text-sm text-slate-600">Tổng số công ty: {{ paginator.count }}</p>
+        </div>
+        <a href="{% url 'company_add' %}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base">Add Company</a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="mb-6">
+        <form method="get" class="flex flex-col sm:flex-row gap-2">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="Tìm kiếm theo tên, điện thoại, mã số thuế, ngành..."
+                   class="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm text-black" />
+            <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm">Search</button>
+            {% if search_query %}
+            <a href="{% url 'company_list' %}" class="px-6 py-2 bg-slate-300 text-slate-700 rounded-lg hover:bg-slate-400 text-sm text-center">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="rounded-xl bg-white shadow-sm border border-slate-200 overflow-hidden">
+        <!-- Desktop Table -->
+        <div class="hidden lg:block">
+            <table class="min-w-full text-left text-sm text-slate-700">
+                <thead class="bg-slate-100 text-slate-600 uppercase text-xs tracking-wider">
+                    <tr>
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Industry</th>
+                        <th class="px-4 py-3">Phone</th>
+                        <th class="px-4 py-3">Address</th>
+                        <th class="px-4 py-3">Revenue</th>
+                        <th class="px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                    {% for company in companies %}
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium text-slate-800">{{ company.company_name }}</td>
+                        <td class="px-4 py-3">{{ company.industry|default:'-' }}</td>
+                        <td class="px-4 py-3">{{ company.phone|default:'-' }}</td>
+                        <td class="px-4 py-3">{{ company.address|truncatechars:40|default:'-' }}</td>
+                        <td class="px-4 py-3">{{ company.revenue|default:'-' }}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <a href="{% url 'company_detail' company.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
+                                <button type="button" onclick="openDeleteModal('{% url 'company_delete' company.pk %}', 'Công ty {{ company.company_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-5 text-center text-slate-500">{% if search_query %}Không tìm thấy công ty phù hợp.{% else %}Không có công ty nào.{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="lg:hidden">
+            {% for company in companies %}
+            <div class="px-4 py-4 border-b border-slate-200 last:border-b-0">
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="font-medium text-slate-800 text-lg">{{ company.company_name }}</h3>
+                </div>
+                <div class="space-y-2 text-sm text-slate-600 mb-3">
+                    <div><span class="font-medium">Industry:</span> {{ company.industry|default:'-' }}</div>
+                    <div><span class="font-medium">Phone:</span> {{ company.phone|default:'-' }}</div>
+                    <div><span class="font-medium">Address:</span> {{ company.address|truncatechars:50|default:'-' }}</div>
+                    <div><span class="font-medium">Revenue:</span> {{ company.revenue|default:'-' }}</div>
+                </div>
+                <div class="flex gap-3">
+                    <a href="{% url 'company_detail' company.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
+                    <a href="{% url 'company_edit' company.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                    <button type="button" onclick="openDeleteModal('{% url 'company_delete' company.pk %}', 'Công ty {{ company.company_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="px-4 py-8 text-center text-slate-500">
+                {% if search_query %}Không tìm thấy công ty phù hợp.{% else %}Không có công ty nào.{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="text-sm text-black">
+            Trang <strong class="text-black">{{ page_obj.number }}</strong> của <strong class="text-black">{{ paginator.num_pages }}</strong> (tổng <span class="text-black">{{ paginator.count }}</span> công ty)
+        </div>
+        <div class="flex gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 text-sm text-black">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 text-sm text-black">Previous</a>
+            {% endif %}
+
+            <!-- Page numbers -->
+            {% for num in paginator.page_range %}
+                {% if page_obj.number == num %}
+                <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm text-black">{{ num }}</button>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 text-sm text-black">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 text-sm text-black">Next</a>
+            <a href="?page={{ paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 text-sm text-black">Last</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
