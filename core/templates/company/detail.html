@@ -197,6 +197,88 @@
     </p>
     {% endif %}
   </div>
+
+  <!-- License Records Section -->
+  <div
+    class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8 mt-6 lg:mt-8"
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+      <h3 class="text-lg lg:text-xl font-bold text-slate-800 text-black">
+        Danh sách License Record
+      </h3>
+      <a
+        href="{% url 'license_record_add' company.pk %}"
+        class="px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm lg:text-base text-center mt-2 sm:mt-0"
+        >Add License Record</a
+      >
+    </div>
+    {% if license_records %}
+    <!-- Desktop Table -->
+    <div class="hidden lg:block overflow-x-auto">
+      <table class="w-full border-collapse border border-slate-300">
+        <thead>
+          <tr class="bg-slate-50">
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Product</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Product ID</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Quantity</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Seats</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Type</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Start</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Expire</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Partner</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for license_record in license_records %}
+          <tr class="hover:bg-slate-50">
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.product_name }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.product_id }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.quantity }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.product_seats }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.license_type }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.start_date|date:"d/m/Y" }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.expiration_date|date:"d/m/Y" }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.partner }}</td>
+            <td class="border border-slate-300 px-4 py-2">
+              <div class="flex gap-2">
+                <a href="{% url 'license_record_edit' license_record.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                <button type="button" onclick="openDeleteModal('{% url 'license_record_delete' license_record.pk %}', 'License {{ license_record.product_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="lg:hidden space-y-4">
+      {% for license_record in license_records %}
+      <div class="border border-slate-200 rounded-lg p-4">
+        <h4 class="font-medium text-black mb-2">{{ license_record.product_name }}</h4>
+        <div class="space-y-1 text-sm text-black">
+          <div><span class="font-medium">Product ID:</span> {{ license_record.product_id }}</div>
+          <div><span class="font-medium">Quantity:</span> {{ license_record.quantity }}</div>
+          <div><span class="font-medium">Seats:</span> {{ license_record.product_seats }}</div>
+          <div><span class="font-medium">Type:</span> {{ license_record.license_type }}</div>
+          <div><span class="font-medium">Start:</span> {{ license_record.start_date|date:"d/m/Y" }}</div>
+          <div><span class="font-medium">Expire:</span> {{ license_record.expiration_date|date:"d/m/Y" }}</div>
+          <div><span class="font-medium">Partner:</span> {{ license_record.partner }}</div>
+        </div>
+        <div class="flex gap-3 mt-2">
+          <a href="{% url 'license_record_edit' license_record.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+          <button type="button" onclick="openDeleteModal('{% url 'license_record_delete' license_record.pk %}', 'License {{ license_record.product_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-slate-500 italic">
+      Chưa có license record nào được thêm cho công ty này.
+    </p>
+    {% endif %}
+  </div>
 </div>
 
 {% endblock %}

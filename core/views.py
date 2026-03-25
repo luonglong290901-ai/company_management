@@ -4,8 +4,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from .models import Company, Contact
-from .forms import CompanyForm, ContactForm
+from .models import Company, Contact, LicenseRecord
+from .forms import CompanyForm, ContactForm, LicenseRecordForm
 
 # LoginRequiredMixin sẽ tự động đá người dùng ra trang login nếu chưa đăng nhập
 class DashboardView(LoginRequiredMixin, ListView):
@@ -51,6 +51,11 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     template_name = 'company/detail.html'
     context_object_name = 'company'
     login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['license_records'] = self.object.license_records.order_by('expiration_date', 'id')
+        return context
 
 
 class CompanyCreateView(LoginRequiredMixin, CreateView):
@@ -142,6 +147,64 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
         contact = self.get_object()
         company = contact.company
         messages.success(request, f'Contact "{contact.contact_name}" has been deleted successfully!')
+        return super().delete(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.object.company.pk})
+
+
+class LicenseRecordCreateView(LoginRequiredMixin, CreateView):
+    model = LicenseRecord
+    form_class = LicenseRecordForm
+    template_name = 'license_record/form.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = Company.objects.get(pk=self.kwargs['company_pk'])
+        return context
+
+    def form_valid(self, form):
+        form.instance.company = Company.objects.get(pk=self.kwargs['company_pk'])
+        messages.success(self.request, f'License record "{form.instance.product_name}" has been added successfully!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.kwargs['company_pk']})
+
+
+class LicenseRecordUpdateView(LoginRequiredMixin, UpdateView):
+    model = LicenseRecord
+    form_class = LicenseRecordForm
+    template_name = 'license_record/form.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, f'License record "{form.instance.product_name}" has been updated successfully!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.object.company.pk})
+
+
+class LicenseRecordDeleteView(LoginRequiredMixin, DeleteView):
+    model = LicenseRecord
+    template_name = 'license_record/confirm_delete.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        license_record = self.get_object()
+        messages.success(request, f'License record "{license_record.product_name}" has been deleted successfully!')
         return super().delete(request, *args, **kwargs)
 
     def get_success_url(self):

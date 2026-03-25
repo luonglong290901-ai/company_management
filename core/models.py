@@ -9,12 +9,12 @@ class Company(models.Model):
     tax_code = models.CharField(max_length=50, blank=True)
     website = models.CharField(max_length=255, blank=True)
     operation_date = models.DateField(null=True, blank=True)
-    legal_representative = models.CharField(max_length=255, blank=True)
+    legal_representative = models.CharField(max_length=505, blank=True)
     industry = models.TextField(blank=True)
     main_customer = models.TextField(blank=True)
     branches_in_vn = models.TextField(blank=True)
-    owner = models.CharField(max_length=500, blank=True)
-    capital = models.DecimalField(max_digits=18, decimal_places=2, null=True, blank=True)
+    owner = models.TextField(blank=True)
+    capital = models.CharField(max_length=255, null=True, blank=True)
     revenue = models.CharField(max_length=255, blank=True)
     scale = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True, help_text="Ghi chú về công ty")
@@ -38,4 +38,23 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.contact_name} ({self.company.company_name})"
+
+
+class LicenseRecord(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='license_records')
+
+    product_name = models.CharField(max_length=255)
+    product_id = models.CharField(max_length=20)
+    quantity = models.IntegerField()
+    product_seats = models.IntegerField()
+    license_type = models.CharField(max_length=100)
+    start_date = models.DateField()
+    expiration_date = models.DateField()
+    partner = models.CharField(max_length=255)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.product_name} - {self.company.company_name}"
 

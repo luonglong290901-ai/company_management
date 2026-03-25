@@ -29,7 +29,6 @@
                     <tr>
                         <th class="px-4 py-3">Name</th>
                         <th class="px-4 py-3">Industry</th>
-                        <th class="px-4 py-3">Phone</th>
                         <th class="px-4 py-3">Address</th>
                         <th class="px-4 py-3">Revenue</th>
                         <th class="px-4 py-3">Action</th>
@@ -40,8 +39,7 @@
                     <tr class="hover:bg-slate-50">
                         <td class="px-4 py-3 font-medium text-slate-800">{{ company.company_name }}</td>
                         <td class="px-4 py-3">{{ company.industry|default:'-' }}</td>
-                        <td class="px-4 py-3">{{ company.phone|default:'-' }}</td>
-                        <td class="px-4 py-3">{{ company.address|truncatechars:40|default:'-' }}</td>
+                        <td class="px-4 py-3 max-w-xl whitespace-normal break-words">{{ company.address|default:'-' }}</td>
                         <td class="px-4 py-3">{{ company.revenue|default:'-' }}</td>
                         <td class="px-4 py-3">
                             <div class="flex flex-col sm:flex-row gap-2">
@@ -52,7 +50,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" class="px-4 py-5 text-center text-slate-500">{% if search_query %}Không tìm thấy công ty phù hợp.{% else %}Không có công ty nào.{% endif %}</td>
+                        <td colspan="5" class="px-4 py-5 text-center text-slate-500">{% if search_query %}Không tìm thấy công ty phù hợp.{% else %}Không có công ty nào.{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -68,8 +66,7 @@
                 </div>
                 <div class="space-y-2 text-sm text-slate-600 mb-3">
                     <div><span class="font-medium">Industry:</span> {{ company.industry|default:'-' }}</div>
-                    <div><span class="font-medium">Phone:</span> {{ company.phone|default:'-' }}</div>
-                    <div><span class="font-medium">Address:</span> {{ company.address|truncatechars:50|default:'-' }}</div>
+                    <div><span class="font-medium">Address:</span> {{ company.address|default:'-' }}</div>
                     <div><span class="font-medium">Revenue:</span> {{ company.revenue|default:'-' }}</div>
                 </div>
                 <div class="flex gap-3">

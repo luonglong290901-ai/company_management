@@ -4,40 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}V-Dashboard{% endblock %}</title>
+    <title>{% block title %}Monday{% endblock %}</title>
     {% tailwind_css %}
 </head>
 <body class="bg-slate-100">
     <!-- Mobile menu overlay -->
-    <div id="mobileMenu" class="fixed inset-0 z-50 lg:hidden bg-black bg-opacity-50 hidden">
-        <div class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobileSidebar">
-            <div class="p-6 border-b border-slate-800">
+    <div id="mobileMenu" class="fixed inset-0 z-50 lg:hidden bg-black/45 hidden">
+        <div id="mobileSidebar" class="fixed inset-y-0 left-0 w-72 bg-slate-50 text-slate-700 flex flex-col border-r border-slate-200 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="p-6">
                 <div class="flex items-center justify-between">
-                    <h1 class="text-2xl font-bold">V-Dashboard</h1>
-                    <button id="closeMobileMenu" class="text-white hover:text-slate-300">
+                    <h1 class="text-3xl font-black tracking-tight text-slate-900">Monday</h1>
+                    <button id="closeMobileMenu" class="text-slate-500 hover:text-slate-700">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
             </div>
-            <nav class="flex-1 p-4 space-y-2 text-sm">
-                <a href="{% url 'dashboard' %}" class="block px-4 py-2 rounded-md hover:bg-slate-800" onclick="closeMobileMenu()">Dashboard</a>
-                <a href="{% url 'company_list' %}" class="block px-4 py-2 rounded-md hover:bg-slate-800" onclick="closeMobileMenu()">Company</a>
+
+            <nav class="flex-1 px-4 pb-4 text-sm">
+                <div class="space-y-1">
+                    <a href="{% url 'dashboard' %}" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.resolver_match.url_name == 'dashboard' %}bg-blue-600 text-white shadow-sm{% else %}text-slate-600 hover:bg-slate-200{% endif %}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 13h6v7H4v-7zm10-9h6v16h-6V4zM4 4h6v7H4V4z"></path></svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    <a href="{% url 'company_list' %}" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.resolver_match.url_name == 'company_list' %}bg-blue-600 text-white shadow-sm{% else %}text-slate-600 hover:bg-slate-200{% endif %}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v12m14-12v12M8 11h8m-8 4h8"></path></svg>
+                        <span class="font-medium">Company</span>
+                    </a>
+                    <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 10c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.255-.949L3 18l1.35-3.6A7.49 7.49 0 013 10c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        <span class="font-medium">Chats</span>
+                    </a>
+                    <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h6M6 3h12a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 012-2z"></path></svg>
+                        <span class="font-medium">Documents</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 border-t border-slate-200 pt-4">
+                    <div class="flex items-center justify-between px-2 mb-3">
+                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
+                        <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
+                    </div>
+                    <div class="space-y-2 px-2 text-slate-600">
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
+                    </div>
+                </div>
             </nav>
+
+            <div class="p-4 border-t border-slate-200 text-sm text-slate-500 space-y-1">
+                <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-6v2m0 16v2m10-10h-2M4 12H2m16.95 6.95l-1.414-1.414M6.464 6.464L5.05 5.05m12.728 0l-1.414 1.414M6.464 17.536L5.05 18.95"></path></svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 1.76-2 3.172-2 1.93 0 3.5 1.57 3.5 3.5 0 1.625-1.111 2.99-2.614 3.377A2 2 0 0011 15.803V17m.01 3h.01"></path></svg>
+                    <span>Help & Support</span>
+                </a>
+            </div>
         </div>
     </div>
 
     <div class="flex min-h-screen">
         <!-- Desktop Sidebar -->
-        <aside class="hidden lg:flex w-64 bg-slate-900 text-white flex-col">
-            <div class="p-6 border-b border-slate-800">
-                <h1 class="text-2xl font-bold">V-Dashboard</h1>
+        <aside class="hidden lg:flex w-72 bg-slate-50 text-slate-700 flex-col border-r border-slate-200">
+            <div class="p-6">
+                <h1 class="text-3xl font-black tracking-tight text-slate-900">Monday</h1>
             </div>
-            <nav class="flex-1 p-4 space-y-2 text-sm">
-                <a href="{% url 'dashboard' %}" class="block px-4 py-2 rounded-md hover:bg-slate-800">Dashboard</a>
-                <a href="{% url 'company_list' %}" class="block px-4 py-2 rounded-md hover:bg-slate-800">Company</a>
+
+            <nav class="flex-1 px-4 pb-4 text-sm">
+                <div class="space-y-1">
+                    <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.resolver_match.url_name == 'dashboard' %}bg-blue-600 text-white shadow-sm{% else %}text-slate-600 hover:bg-slate-200{% endif %}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 13h6v7H4v-7zm10-9h6v16h-6V4zM4 4h6v7H4V4z"></path></svg>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    <a href="{% url 'company_list' %}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.resolver_match.url_name == 'company_list' %}bg-blue-600 text-white shadow-sm{% else %}text-slate-600 hover:bg-slate-200{% endif %}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v12m14-12v12M8 11h8m-8 4h8"></path></svg>
+                        <span class="font-medium">Companies</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 10c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.255-.949L3 18l1.35-3.6A7.49 7.49 0 013 10c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        <span class="font-medium">Chats</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h6M6 3h12a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 012-2z"></path></svg>
+                        <span class="font-medium">Documents</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 border-t border-slate-200 pt-4">
+                    <div class="flex items-center justify-between px-2 mb-3">
+                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
+                        <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
+                    </div>
+                    <div class="space-y-2 px-2 text-slate-600">
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
+                    </div>
+                </div>
             </nav>
+
+            <div class="p-4 border-t border-slate-200 text-sm text-slate-500 space-y-1">
+                <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-6v2m0 16v2m10-10h-2M4 12H2m16.95 6.95l-1.414-1.414M6.464 6.464L5.05 5.05m12.728 0l-1.414 1.414M6.464 17.536L5.05 18.95"></path></svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 1.76-2 3.172-2 1.93 0 3.5 1.57 3.5 3.5 0 1.625-1.111 2.99-2.614 3.377A2 2 0 0011 15.803V17m.01 3h.01"></path></svg>
+                    <span>Help & Support</span>
+                </a>
+            </div>
         </aside>
 
         <div class="flex-1 flex flex-col">
@@ -53,7 +131,7 @@
                 <form method="get" class="flex-1 max-w-xs lg:max-w-sm mx-4">
                     <div class="relative">
                         <input type="text" name="q" placeholder="Search"
-                               class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm" />
+                               class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" />
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
                     </div>
                 </form>
@@ -100,34 +178,41 @@
             const closeMobileMenu = document.getElementById('closeMobileMenu');
 
             // Avatar menu
-            avatarBtn.addEventListener('click', function(event) {
-                event.preventDefault();
-                avatarMenu.classList.toggle('hidden');
-            });
+            if (avatarBtn && avatarMenu) {
+                avatarBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    avatarMenu.classList.toggle('hidden');
+                });
 
-            document.addEventListener('click', function(event) {
-                if (!avatarBtn.contains(event.target) && !avatarMenu.contains(event.target)) {
-                    avatarMenu.classList.add('hidden');
-                }
-            });
+                document.addEventListener('click', function(event) {
+                    if (!avatarBtn.contains(event.target) && !avatarMenu.contains(event.target)) {
+                        avatarMenu.classList.add('hidden');
+                    }
+                });
+            }
 
             // Mobile menu
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileMenu.classList.remove('hidden');
-                mobileSidebar.classList.remove('-translate-x-full');
-            });
+            if (mobileMenuBtn && mobileMenu && mobileSidebar && closeMobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.remove('hidden');
+                    mobileSidebar.classList.remove('-translate-x-full');
+                });
 
-            closeMobileMenu.addEventListener('click', function() {
-                closeMobileMenuFunc();
-            });
-
-            mobileMenu.addEventListener('click', function(event) {
-                if (event.target === mobileMenu) {
+                closeMobileMenu.addEventListener('click', function() {
                     closeMobileMenuFunc();
-                }
-            });
+                });
+
+                mobileMenu.addEventListener('click', function(event) {
+                    if (event.target === mobileMenu) {
+                        closeMobileMenuFunc();
+                    }
+                });
+            }
 
             function closeMobileMenuFunc() {
+                if (!mobileSidebar || !mobileMenu) {
+                    return;
+                }
                 mobileSidebar.classList.add('-translate-x-full');
                 setTimeout(() => {
                     mobileMenu.classList.add('hidden');
