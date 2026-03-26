@@ -43,7 +43,7 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700">Ngành</label>
-          <p class="text-slate-900">{{ company.industry|default:"N/A" }}</p>
+          <p class="text-slate-900">{{ company.industry|default:"N/A"|linebreaksbr }}</p>
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700">Quy mô</label>
@@ -59,7 +59,7 @@
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-slate-700">Địa chỉ</label>
-          <p class="text-slate-900">{{ company.address|default:"N/A" }}</p>
+          <p class="text-slate-900">{{ company.address|default:"N/A"|linebreaksbr }}</p>
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700">Website</label>
@@ -74,6 +74,10 @@
           <p class="text-slate-900">{{ company.revenue|default:"N/A" }}</p>
         </div>
         <div>
+          <label class="block text-sm font-medium text-slate-700">Thông tin xuất khẩu</label>
+          <p class="text-slate-900 whitespace-pre-wrap">{{ company.export_info|default:"N/A"|linebreaksbr }}</p>
+        </div>
+        <div>
           <label class="block text-sm font-medium text-slate-700">Đại diện pháp luật</label>
           <p class="text-slate-900">{{ company.legal_representative|default:"N/A" }}</p>
         </div>
@@ -83,7 +87,7 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-slate-700">Chủ sở hữu</label>
-          <p class="text-slate-900">{{ company.owner|default:"N/A" }}</p>
+          <p class="text-slate-900">{{ company.owner|default:"N/A"|linebreaksbr }}</p>
         </div>
       </div>
     </div>
@@ -160,7 +164,7 @@
             </td>
             <td class="border border-slate-300 px-4 py-2">
               <div class="flex gap-2">
-                <a href="{% url 'contact_edit' contact.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                <a href="{% url 'contact_detail' contact.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
                 <button type="button" onclick="openDeleteModal('{% url 'contact_delete' contact.pk %}', 'Liên hệ {{ contact.contact_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
               </div>
             </td>
@@ -185,7 +189,7 @@
           </div>
         </div>
         <div class="flex gap-3 mt-2">
-          <a href="{% url 'contact_edit' contact.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+          <a href="{% url 'contact_detail' contact.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
           <button type="button" onclick="openDeleteModal('{% url 'contact_delete' contact.pk %}', 'Liên hệ {{ contact.contact_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
         </div>
       </div>
@@ -242,7 +246,7 @@
             <td class="border border-slate-300 px-4 py-2 text-black">{{ license_record.partner }}</td>
             <td class="border border-slate-300 px-4 py-2">
               <div class="flex gap-2">
-                <a href="{% url 'license_record_edit' license_record.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+                <a href="{% url 'license_record_detail' license_record.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
                 <button type="button" onclick="openDeleteModal('{% url 'license_record_delete' license_record.pk %}', 'License {{ license_record.product_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
               </div>
             </td>
@@ -267,7 +271,7 @@
           <div><span class="font-medium">Partner:</span> {{ license_record.partner }}</div>
         </div>
         <div class="flex gap-3 mt-2">
-          <a href="{% url 'license_record_edit' license_record.pk %}" class="text-indigo-600 hover:underline text-sm">Edit</a>
+          <a href="{% url 'license_record_detail' license_record.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
           <button type="button" onclick="openDeleteModal('{% url 'license_record_delete' license_record.pk %}', 'License {{ license_record.product_name|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
         </div>
       </div>
@@ -276,6 +280,74 @@
     {% else %}
     <p class="text-slate-500 italic">
       Chưa có license record nào được thêm cho công ty này.
+    </p>
+    {% endif %}
+  </div>
+
+  <!-- Infringement Overview Section -->
+  <div
+    class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8 mt-6 lg:mt-8"
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+      <h3 class="text-lg lg:text-xl font-bold text-slate-800 text-black">
+        Infringement Overview
+      </h3>
+      <a
+        href="{% url 'infringement_overview_add' company.pk %}"
+        class="px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm lg:text-base text-center mt-2 sm:mt-0"
+        >Add Infringement Overview</a
+      >
+    </div>
+    {% if infringement_overviews %}
+    <div class="hidden lg:block overflow-x-auto">
+      <table class="w-full border-collapse border border-slate-300">
+        <thead>
+          <tr class="bg-slate-50">
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Thời gian vi phạm</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Số máy tính vi phạm</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Phần mềm</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Event to quotes</th>
+            <th class="border border-slate-300 px-4 py-2 text-left text-black">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for infringement in infringement_overviews %}
+          <tr class="hover:bg-slate-50">
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ infringement.infringement_time }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ infringement.number_of_infringement_computers }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ infringement.infringement_softwares }}</td>
+            <td class="border border-slate-300 px-4 py-2 text-black">{{ infringement.event_to_quotes|linebreaksbr }}</td>
+            <td class="border border-slate-300 px-4 py-2">
+              <div class="flex gap-2">
+                <a href="{% url 'infringement_overview_detail' infringement.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
+                <button type="button" onclick="openDeleteModal('{% url 'infringement_overview_delete' infringement.pk %}', 'Infringement {{ infringement.infringement_time|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lg:hidden space-y-4">
+      {% for infringement in infringement_overviews %}
+      <div class="border border-slate-200 rounded-lg p-4">
+        <h4 class="font-medium text-black mb-2">{{ infringement.infringement_time }}</h4>
+        <div class="space-y-1 text-sm text-black">
+          <div><span class="font-medium">Số máy vi phạm:</span> {{ infringement.number_of_infringement_computers }}</div>
+          <div><span class="font-medium">Phần mềm:</span> {{ infringement.infringement_softwares }}</div>
+          <div><span class="font-medium">Event to quotes:</span> {{ infringement.event_to_quotes|linebreaksbr }}</div>
+        </div>
+        <div class="flex gap-3 mt-2">
+          <a href="{% url 'infringement_overview_detail' infringement.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
+          <button type="button" onclick="openDeleteModal('{% url 'infringement_overview_delete' infringement.pk %}', 'Infringement {{ infringement.infringement_time|escapejs }}')" class="text-red-600 hover:underline text-sm">Delete</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-slate-500 italic">
+      Chưa có dữ liệu Infringement Overview cho công ty này.
     </p>
     {% endif %}
   </div>

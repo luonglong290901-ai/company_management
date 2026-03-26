@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 
 # SQLite database
@@ -23,9 +24,25 @@ Thumbs.db
 
 # Log files
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # VS Code settings
 .vscode/
+
+# Python tooling / test caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Build / packaging artifacts
+build/
+dist/
+*.egg-info/
 
 # Static files (if built)
 staticfiles/
@@ -36,3 +53,7 @@ node_modules/
 
 # Tailwind/TMP
 *.tmp
+
+# Keep this commented if you WANT to commit built CSS for deployment.
+# Uncomment if you do NOT want built CSS in git.
+# theme/static/css/dist/

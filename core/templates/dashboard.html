@@ -37,7 +37,7 @@
                     {% for company in companies %}
                     <tr class="hover:bg-slate-50">
                         <td class="px-4 py-3 font-medium text-slate-800">{{ company.company_name }}</td>
-                        <td class="px-4 py-3">{{ company.industry|default:'-' }}</td>
+                        <td class="px-4 py-3">{{ company.industry|default:'-'|linebreaksbr }}</td>
                         <td class="px-4 py-3">{{ company.phone|default:'-' }}</td>
                         <td class="px-4 py-3">{{ company.revenue|default:'-' }}</td>
                         <td class="px-4 py-3 text-sm">
@@ -62,7 +62,7 @@
                     <span class="rounded-full px-2 py-1 bg-emerald-100 text-emerald-800 text-xs">Active</span>
                 </div>
                 <div class="space-y-1 text-sm text-slate-600">
-                    <div><span class="font-medium">Industry:</span> {{ company.industry|default:'-' }}</div>
+                    <div><span class="font-medium">Industry:</span> {{ company.industry|default:'-'|linebreaksbr }}</div>
                     <div><span class="font-medium">Phone:</span> {{ company.phone|default:'-' }}</div>
                     <div><span class="font-medium">Revenue:</span> {{ company.revenue|default:'-' }}</div>
                 </div>

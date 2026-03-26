@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-5xl p-4 lg:p-6">
+  <div class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Infringement Overview</h2>
+        <p class="text-sm text-slate-500">Chi tiết vi phạm của công ty <strong>{{ company.company_name }}</strong></p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm lg:text-base text-center">Back to company</a>
+        <a href="{% url 'infringement_overview_edit' infringement_overview.pk %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base text-center">Edit</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Thời gian vi phạm</label>
+        <p class="text-slate-900">{{ infringement_overview.infringement_time }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Số máy tính vi phạm</label>
+        <p class="text-slate-900">{{ infringement_overview.number_of_infringement_computers }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Phần mềm</label>
+        <p class="text-slate-900">{{ infringement_overview.infringement_softwares }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Event to quotes</label>
+        <p class="text-slate-900 whitespace-pre-wrap">{{ infringement_overview.event_to_quotes }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Phòng ban</label>
+        <p class="text-slate-900">{{ infringement_overview.department|default:'N/A' }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Địa chỉ vi phạm</label>
+        <p class="text-slate-900 whitespace-pre-wrap">{{ infringement_overview.infringement_address|default:'N/A' }}</p>
+      </div>
+      <div class="lg:col-span-2">
+        <label class="block text-sm font-medium text-slate-700">Phần mềm khác</label>
+        <p class="text-slate-900">{{ infringement_overview.other_softwares|default:'N/A' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

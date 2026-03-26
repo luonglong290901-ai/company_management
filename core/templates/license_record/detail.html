@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-5xl p-4 lg:p-6">
+  <div class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">License Record Detail</h2>
+        <p class="text-sm text-slate-500">Chi tiết license của công ty <strong>{{ company.company_name }}</strong></p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm lg:text-base text-center">Back to company</a>
+        <a href="{% url 'license_record_edit' license_record.pk %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base text-center">Edit</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Product</label>
+        <p class="text-slate-900">{{ license_record.product_name }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Product ID</label>
+        <p class="text-slate-900">{{ license_record.product_id }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Quantity</label>
+        <p class="text-slate-900">{{ license_record.quantity }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Seats</label>
+        <p class="text-slate-900">{{ license_record.product_seats }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Type</label>
+        <p class="text-slate-900">{{ license_record.license_type }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Partner</label>
+        <p class="text-slate-900">{{ license_record.partner }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Start Date</label>
+        <p class="text-slate-900">{{ license_record.start_date|date:'d/m/Y' }}</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Expiration Date</label>
+        <p class="text-slate-900">{{ license_record.expiration_date|date:'d/m/Y' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

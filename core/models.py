@@ -16,6 +16,7 @@ class Company(models.Model):
     owner = models.TextField(blank=True)
     capital = models.CharField(max_length=255, null=True, blank=True)
     revenue = models.CharField(max_length=255, blank=True)
+    export_info = models.TextField(blank=True)
     scale = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True, help_text="Ghi chú về công ty")
 
@@ -57,4 +58,22 @@ class LicenseRecord(models.Model):
 
     def __str__(self):
         return f"{self.product_name} - {self.company.company_name}"
+
+
+class InfringementOverview(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='infringement_overviews')
+
+    number_of_infringement_computers = models.IntegerField()
+    infringement_time = models.CharField(max_length=255)
+    event_to_quotes = models.TextField()
+    infringement_softwares = models.CharField(max_length=255)
+    department = models.CharField(max_length=255, blank=True)
+    infringement_address = models.TextField(blank=True)
+    other_softwares = models.CharField(max_length=255, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Infringement - {self.company.company_name} - {self.infringement_time}"
 

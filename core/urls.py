@@ -3,8 +3,10 @@ from django.contrib.auth import views as auth_views
 from .views import (
     DashboardView, CompanyListView, CompanyDetailView, 
     CompanyCreateView, CompanyUpdateView, CompanyDeleteView,
-    ContactCreateView, ContactUpdateView, ContactDeleteView,
-    LicenseRecordCreateView, LicenseRecordUpdateView, LicenseRecordDeleteView
+    ContactCreateView, ContactDetailView, ContactUpdateView, ContactDeleteView,
+    LicenseRecordCreateView, LicenseRecordDetailView, LicenseRecordUpdateView, LicenseRecordDeleteView,
+    InfringementOverviewCreateView, InfringementOverviewDetailView,
+    InfringementOverviewUpdateView, InfringementOverviewDeleteView
 )
 
 urlpatterns = [
@@ -17,9 +19,15 @@ urlpatterns = [
     path('companies/<int:pk>/edit/', CompanyUpdateView.as_view(), name='company_edit'),
     path('companies/<int:pk>/delete/', CompanyDeleteView.as_view(), name='company_delete'),
     path('companies/<int:company_pk>/contacts/add/', ContactCreateView.as_view(), name='contact_add'),
+    path('contacts/<int:pk>/', ContactDetailView.as_view(), name='contact_detail'),
     path('contacts/<int:pk>/edit/', ContactUpdateView.as_view(), name='contact_edit'),
     path('contacts/<int:pk>/delete/', ContactDeleteView.as_view(), name='contact_delete'),
     path('companies/<int:company_pk>/licenses/add/', LicenseRecordCreateView.as_view(), name='license_record_add'),
+    path('licenses/<int:pk>/', LicenseRecordDetailView.as_view(), name='license_record_detail'),
     path('licenses/<int:pk>/edit/', LicenseRecordUpdateView.as_view(), name='license_record_edit'),
     path('licenses/<int:pk>/delete/', LicenseRecordDeleteView.as_view(), name='license_record_delete'),
+    path('companies/<int:company_pk>/infringements/add/', InfringementOverviewCreateView.as_view(), name='infringement_overview_add'),
+    path('infringements/<int:pk>/', InfringementOverviewDetailView.as_view(), name='infringement_overview_detail'),
+    path('infringements/<int:pk>/edit/', InfringementOverviewUpdateView.as_view(), name='infringement_overview_edit'),
+    path('infringements/<int:pk>/delete/', InfringementOverviewDeleteView.as_view(), name='infringement_overview_delete'),
 ]

@@ -4,8 +4,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from .models import Company, Contact, LicenseRecord
-from .forms import CompanyForm, ContactForm, LicenseRecordForm
+from .models import Company, Contact, LicenseRecord, InfringementOverview
+from .forms import CompanyForm, ContactForm, LicenseRecordForm, InfringementOverviewForm
 
 # LoginRequiredMixin sẽ tự động đá người dùng ra trang login nếu chưa đăng nhập
 class DashboardView(LoginRequiredMixin, ListView):
@@ -55,6 +55,7 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['license_records'] = self.object.license_records.order_by('expiration_date', 'id')
+        context['infringement_overviews'] = self.object.infringement_overviews.order_by('-created_at', '-id')
         return context
 
 
@@ -112,6 +113,18 @@ class ContactCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('company_detail', kwargs={'pk': self.kwargs['company_pk']})
+
+
+class ContactDetailView(LoginRequiredMixin, DetailView):
+    model = Contact
+    template_name = 'contact/detail.html'
+    context_object_name = 'contact'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
 
 
 class ContactUpdateView(LoginRequiredMixin, UpdateView):
@@ -173,6 +186,18 @@ class LicenseRecordCreateView(LoginRequiredMixin, CreateView):
         return reverse('company_detail', kwargs={'pk': self.kwargs['company_pk']})
 
 
+class LicenseRecordDetailView(LoginRequiredMixin, DetailView):
+    model = LicenseRecord
+    template_name = 'license_record/detail.html'
+    context_object_name = 'license_record'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+
 class LicenseRecordUpdateView(LoginRequiredMixin, UpdateView):
     model = LicenseRecord
     form_class = LicenseRecordForm
@@ -205,6 +230,75 @@ class LicenseRecordDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         license_record = self.get_object()
         messages.success(request, f'License record "{license_record.product_name}" has been deleted successfully!')
+        return super().delete(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.object.company.pk})
+
+
+class InfringementOverviewCreateView(LoginRequiredMixin, CreateView):
+    model = InfringementOverview
+    form_class = InfringementOverviewForm
+    template_name = 'infringement_overview/form.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = Company.objects.get(pk=self.kwargs['company_pk'])
+        return context
+
+    def form_valid(self, form):
+        form.instance.company = Company.objects.get(pk=self.kwargs['company_pk'])
+        messages.success(self.request, 'Infringement overview has been added successfully!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.kwargs['company_pk']})
+
+
+class InfringementOverviewDetailView(LoginRequiredMixin, DetailView):
+    model = InfringementOverview
+    template_name = 'infringement_overview/detail.html'
+    context_object_name = 'infringement_overview'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+
+class InfringementOverviewUpdateView(LoginRequiredMixin, UpdateView):
+    model = InfringementOverview
+    form_class = InfringementOverviewForm
+    template_name = 'infringement_overview/form.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Infringement overview has been updated successfully!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('company_detail', kwargs={'pk': self.object.company.pk})
+
+
+class InfringementOverviewDeleteView(LoginRequiredMixin, DeleteView):
+    model = InfringementOverview
+    template_name = 'infringement_overview/confirm_delete.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['company'] = self.object.company
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Infringement overview has been deleted successfully!')
         return super().delete(request, *args, **kwargs)
 
     def get_success_url(self):
