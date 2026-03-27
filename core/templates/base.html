@@ -47,7 +47,7 @@
                         <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
                         <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
                     </div>
-                    <div class="space-y-2 px-2 text-slate-600">
+                    <div class="space-y-2 px-2 text-slate-600 max-h-40 overflow-y-auto pr-1">
                         <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
                         <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
                     </div>
@@ -69,7 +69,7 @@
 
     <div class="flex min-h-screen">
         <!-- Desktop Sidebar -->
-        <aside class="hidden lg:flex w-72 bg-slate-50 text-slate-700 flex-col border-r border-slate-200">
+        <aside class="hidden lg:sticky lg:top-0 lg:flex w-72 h-screen bg-slate-50 text-slate-700 flex-col border-r border-slate-200">
             <div class="p-6">
                 <h1 class="text-3xl font-black tracking-tight text-slate-900">Monday</h1>
             </div>
@@ -85,12 +85,8 @@
                         <span class="font-medium">Companies</span>
                     </a>
                     <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 10c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.255-.949L3 18l1.35-3.6A7.49 7.49 0 013 10c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                        <span class="font-medium">Chats</span>
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h6M6 3h12a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 012-2z"></path></svg>
-                        <span class="font-medium">Documents</span>
+                        <span class="font-medium">Working Process</span>
                     </a>
                 </div>
 
@@ -99,7 +95,7 @@
                         <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
                         <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
                     </div>
-                    <div class="space-y-2 px-2 text-slate-600">
+                    <div class="space-y-2 px-2 text-slate-600 max-h-40 overflow-y-auto pr-1">
                         <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
                         <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
                     </div>
@@ -127,23 +123,23 @@
                     </svg>
                 </button>
 
-                <!-- Search bar - responsive -->
-                <form method="get" class="flex-1 max-w-xs lg:max-w-sm mx-4">
-                    <div class="relative">
-                        <input type="text" name="q" placeholder="Search"
-                               class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" />
-                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
-                    </div>
-                </form>
-
                 <!-- Avatar menu -->
-                <div class="relative">
+                <div class="relative ml-auto">
                     <button id="avatarBtn" class="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-lg hover:bg-slate-200">
                         <img src="https://i.pravatar.cc/32" alt="avatar" class="w-8 h-8 rounded-full" />
-                        <span class="hidden sm:block text-black text-sm font-medium">Admin</span>
+                        <span class="hidden sm:block text-black text-sm font-medium">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.first_name or request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }} ({{ request.user.username }})
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
+                            {% else %}
+                                Guest
+                            {% endif %}
+                        </span>
                     </button>
                     <div id="avatarMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg z-20">
-                        <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Account Settings</a>
                         <form method="POST" action="{% url 'logout' %}" class="m-0">
                             {% csrf_token %}
                             <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-slate-100">Logout</button>

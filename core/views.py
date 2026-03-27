@@ -374,6 +374,14 @@ class CSVImportView(LoginRequiredMixin, FormView):
             },
         )
 
+        # Xóa file vật lý của các lần import cũ, chỉ giữ metadata (tên + ngày)
+        old_imports = ImportedCSVFile.objects.filter(company=self.company).exclude(pk=imported_csv.pk)
+        for old in old_imports:
+            if old.csv_file:
+                old.csv_file.delete(save=False)
+                old.csv_file = None
+                old.save(update_fields=['csv_file'])
+
         messages.success(
             self.request,
             f'Import thanh cong. Da cap nhat Infringement Detail voi {unique_count} gia tri unique.',

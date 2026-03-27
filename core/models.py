@@ -87,7 +87,7 @@ class ImportedCSVFile(models.Model):
         null=True,
         blank=True,
     )
-    csv_file = models.FileField(upload_to='imports/csv/')
+    csv_file = models.FileField(upload_to='imports/csv/', null=True, blank=True)
     original_filename = models.CharField(max_length=255)
     uploaded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

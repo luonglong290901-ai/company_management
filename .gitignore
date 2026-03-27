@@ -47,9 +47,13 @@ dist/
 # Static files (if built)
 staticfiles/
 static_root/
+media/
 
 # Node modules (if using npm/yarn for static)
 node_modules/
+
+# Railway local config
+.railway/
 
 # Tailwind/TMP
 *.tmp
