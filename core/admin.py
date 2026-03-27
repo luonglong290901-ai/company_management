@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Company, Contact, LicenseRecord, InfringementOverview
+from .models import Company, Contact, LicenseRecord, InfringementOverview, ImportedCSVFile, InfringementDetail
 
 # Register your models here.
 
@@ -38,4 +38,14 @@ class LicenseRecordAdmin(admin.ModelAdmin):
 @admin.register(InfringementOverview)
 class InfringementOverviewAdmin(admin.ModelAdmin):
     list_display = ('company', 'infringement_time', 'number_of_infringement_computers', 'infringement_softwares', 'event_to_quotes')
+
+
+@admin.register(ImportedCSVFile)
+class ImportedCSVFileAdmin(admin.ModelAdmin):
+    list_display = ('original_filename', 'company', 'uploaded_by', 'uploaded_at')
+
+
+@admin.register(InfringementDetail)
+class InfringementDetailAdmin(admin.ModelAdmin):
+    list_display = ('company', 'product', 'version', 'public_ip_address', 'active_mac')
     

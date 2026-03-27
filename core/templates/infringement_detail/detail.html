@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-5xl p-4 lg:p-6">
+  <div class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Infringement Detail</h2>
+        <p class="text-sm text-slate-500">Cong ty <strong>{{ company.company_name }}</strong></p>
+      </div>
+      <div class="flex gap-2">
+        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm">Back to company</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm items-start">
+
+      <details open class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          File
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">
+          {% if infringement_detail.imported_csv and infringement_detail.imported_csv.csv_file %}
+          <a href="{{ infringement_detail.imported_csv.csv_file.url }}" download class="text-indigo-600 hover:text-indigo-800 hover:underline">
+            {{ infringement_detail.file|default:infringement_detail.imported_csv.original_filename }}
+          </a>
+          {% else %}
+          {{ infringement_detail.file|default:'-'|linebreaksbr }}
+          {% endif %}
+        </div>
+      </details>
+
+      <details open class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Product
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.product|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details open class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Version
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.version|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details open class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Release
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.release|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Active MAC ({{ field_counts.active_mac }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.active_mac|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          MAC2 ({{ field_counts.mac2 }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.mac2|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          MAC3 ({{ field_counts.mac3 }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.mac3|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          MAC4 ({{ field_counts.mac4 }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.mac4|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          System Model ({{ field_counts.system_model }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.system_model|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Wifi Latitude, Longitude ({{ field_counts.wifi_latitude_longitude }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.wifi_latitude_longitude|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          IP Latitude, Longitude ({{ field_counts.ip_latitude_longitude }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.ip_latitude_longitude|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Public IP Address ({{ field_counts.public_ip_address }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.public_ip_address|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Gateway MAC Address ({{ field_counts.gateway_mac_address }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.gateway_mac_address|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Active Wifi Access Point ({{ field_counts.active_wifi_access_point }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.active_wifi_access_point|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden lg:col-span-2">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          License Info ({{ field_counts.license_info }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.license_info|default:'-'|linebreaksbr }}</div>
+      </details>
+
+      <details class="group border border-slate-200 rounded-lg overflow-hidden lg:col-span-2">
+        <summary class="cursor-pointer list-none px-4 py-2.5 font-medium text-slate-700 bg-slate-50 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          Feature Used ({{ field_counts.feature_used }})
+        </summary>
+        <div class="px-4 py-3 text-slate-900 break-words">{{ infringement_detail.feature_used|default:'-'|linebreaksbr }}</div>
+      </details>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -132,3 +132,13 @@ ContactFormSet = inlineformset_factory(
     extra=1, # Số lượng form trống hiện ra để thêm mới
     can_delete=True # Cho phép xóa contact trực tiếp
 )
+
+
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField(
+        label='CSV file',
+        widget=forms.FileInput(attrs={
+            'accept': '.csv',
+            'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black p-2',
+        }),
+    )

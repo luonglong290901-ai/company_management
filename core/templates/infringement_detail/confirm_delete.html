@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto w-full max-w-xl p-4 lg:p-6">
+  <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
+    <h2 class="text-xl font-bold text-slate-800 mb-3">Delete Infringement Detail</h2>
+    <p class="text-slate-700 mb-5">Ban co chac chan muon xoa Infringement Detail cua cong ty <strong>{{ company.company_name }}</strong>?</p>
+
+    <form method="post" class="flex justify-end gap-3">
+      {% csrf_token %}
+      <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-100">Cancel</a>
+      <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

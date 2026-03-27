@@ -6,7 +6,10 @@ from .views import (
     ContactCreateView, ContactDetailView, ContactUpdateView, ContactDeleteView,
     LicenseRecordCreateView, LicenseRecordDetailView, LicenseRecordUpdateView, LicenseRecordDeleteView,
     InfringementOverviewCreateView, InfringementOverviewDetailView,
-    InfringementOverviewUpdateView, InfringementOverviewDeleteView
+    InfringementOverviewUpdateView, InfringementOverviewDeleteView,
+    CSVImportView,
+    InfringementDetailDetailView,
+    InfringementDetailDeleteView,
 )
 
 urlpatterns = [
@@ -30,4 +33,7 @@ urlpatterns = [
     path('infringements/<int:pk>/', InfringementOverviewDetailView.as_view(), name='infringement_overview_detail'),
     path('infringements/<int:pk>/edit/', InfringementOverviewUpdateView.as_view(), name='infringement_overview_edit'),
     path('infringements/<int:pk>/delete/', InfringementOverviewDeleteView.as_view(), name='infringement_overview_delete'),
+    path('companies/<int:company_pk>/infringement-detail/import/', CSVImportView.as_view(), name='infringement_detail_import'),
+    path('infringement-detail/<int:pk>/', InfringementDetailDetailView.as_view(), name='infringement_detail_detail'),
+    path('infringement-detail/<int:pk>/delete/', InfringementDetailDeleteView.as_view(), name='infringement_detail_delete'),
 ]
