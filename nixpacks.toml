@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "python manage.py migrate --noinput && gunicorn config.wsgi:application --workers 2 --bind 0.0.0.0:$PORT"
+cmd = "python manage.py migrate --noinput && python manage.py create_admin && gunicorn config.wsgi:application --workers 2 --bind 0.0.0.0:$PORT"
