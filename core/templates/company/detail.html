@@ -15,23 +15,23 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
       <div class="space-y-4">
-        <div><label class="block text-sm font-medium text-slate-700">Ten tieng Anh</label><p class="text-slate-900">{{ company.english_name|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Dien thoai</label><p class="text-slate-900">{{ company.phone|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Ma so thue</label><p class="text-slate-900">{{ company.tax_code|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Nganh</label><p class="text-slate-900">{{ company.industry|default:'N/A'|linebreaksbr }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Quy mo</label><p class="text-slate-900">{{ company.scale|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Von dieu le</label><p class="text-slate-900">{{ company.capital|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Tên tiếng Anh</label><p class="text-slate-900">{{ company.english_name|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Điện thoại</label><p class="text-slate-900">{{ company.phone|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Mã số thuế</label><p class="text-slate-900">{{ company.tax_code|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Ngành</label><p class="text-slate-900">{{ company.industry|default:'N/A'|linebreaksbr }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Quy mô</label><p class="text-slate-900">{{ company.scale|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Vốn điều lệ</label><p class="text-slate-900">{{ company.capital|default:'N/A' }}</p></div>
       </div>
       <div class="space-y-4">
-        <div><label class="block text-sm font-medium text-slate-700">Dia chi</label><p class="text-slate-900">{{ company.address|default:'N/A'|linebreaksbr }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Địa chỉ</label><p class="text-slate-900">{{ company.address|default:'N/A'|linebreaksbr }}</p></div>
         <div>
           <label class="block text-sm font-medium text-slate-700">Website</label>
           <p class="text-slate-900">{% if company.website %}<a href="{{ company.website }}" target="_blank" class="text-indigo-600 hover:text-indigo-800">{{ company.website }}</a>{% else %}N/A{% endif %}</p>
         </div>
         <div><label class="block text-sm font-medium text-slate-700">Doanh thu</label><p class="text-slate-900">{{ company.revenue|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Thong tin xuat khau</label><p class="text-slate-900">{{ company.export_info|default:'N/A'|linebreaksbr }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Dai dien phap luat</label><p class="text-slate-900">{{ company.legal_representative|default:'N/A' }}</p></div>
-        <div><label class="block text-sm font-medium text-slate-700">Ngay hoat dong</label><p class="text-slate-900">{{ company.operation_date|date:'d/m/Y'|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Thông tin xuất khẩu</label><p class="text-slate-900">{{ company.export_info|default:'N/A'|linebreaksbr }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Đại diện pháp luật</label><p class="text-slate-900">{{ company.legal_representative|default:'N/A' }}</p></div>
+        <div><label class="block text-sm font-medium text-slate-700">Ngày hoạt động</label><p class="text-slate-900">{{ company.operation_date|date:'d/m/Y'|default:'N/A' }}</p></div>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
     <summary class="cursor-pointer list-none p-4 lg:p-6 flex items-center justify-between">
       <span class="flex items-center gap-2">
         <svg class="w-4 h-4 text-slate-500 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-lg font-bold text-slate-800">Danh sach lien he</span>
+        <span class="text-lg font-bold text-slate-800">Danh sách liên hệ</span>
       </span>
       <a href="{% url 'contact_add' company.pk %}" class="px-3 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm">Add Contact</a>
     </summary>
@@ -50,11 +50,11 @@
         <table class="w-full border-collapse border border-slate-300">
           <thead>
             <tr class="bg-slate-50">
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Ten</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Tên</th>
               <th class="border border-slate-300 px-4 py-2 text-left text-black">Email</th>
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Dien thoai</th>
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Chuc vu</th>
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Action</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Điện thoại</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Chức vụ</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -90,7 +90,7 @@
         {% endfor %}
       </div>
       {% else %}
-      <p class="text-slate-500 italic">Chua co lien he nao duoc them cho cong ty nay.</p>
+      <p class="text-slate-500 italic">Chưa có liên hệ nào được thêm cho công ty này.</p>
       {% endif %}
     </div>
   </details>
@@ -99,7 +99,7 @@
     <summary class="cursor-pointer list-none p-4 lg:p-6 flex items-center justify-between">
       <span class="flex items-center gap-2">
         <svg class="w-4 h-4 text-slate-500 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-lg font-bold text-slate-800">Danh sach License Record</span>
+        <span class="text-lg font-bold text-slate-800">License Record</span>
       </span>
       <a href="{% url 'license_record_add' company.pk %}" class="px-3 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm">Add License Record</a>
     </summary>
@@ -160,7 +160,7 @@
         {% endfor %}
       </div>
       {% else %}
-      <p class="text-slate-500 italic">Chua co license record nao duoc them cho cong ty nay.</p>
+      <p class="text-slate-500 italic">Chưa có license record nào được thêm cho công ty này.</p>
       {% endif %}
     </div>
   </details>
@@ -169,7 +169,7 @@
     <summary class="cursor-pointer list-none p-4 lg:p-6 flex items-center justify-between">
       <span class="flex items-center gap-2">
         <svg class="w-4 h-4 text-slate-500 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-lg font-bold text-slate-800">Infringement Overview</span>
+        <span class="text-lg font-bold text-slate-800">Tổng quan vi phạm</span>
       </span>
       <a href="{% url 'infringement_overview_add' company.pk %}" class="px-3 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm">Add Infringement Overview</a>
     </summary>
@@ -179,9 +179,9 @@
         <table class="w-full border-collapse border border-slate-300">
           <thead>
             <tr class="bg-slate-50">
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Thoi gian vi pham</th>
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">So may tinh vi pham</th>
-              <th class="border border-slate-300 px-4 py-2 text-left text-black">Phan mem</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Thời gian vi phạm</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Số máy vi phạm</th>
+              <th class="border border-slate-300 px-4 py-2 text-left text-black">Phần mềm</th>
               <th class="border border-slate-300 px-4 py-2 text-left text-black">Event to quotes</th>
               <th class="border border-slate-300 px-4 py-2 text-left text-black">Action</th>
             </tr>
@@ -208,8 +208,8 @@
         {% for infringement in infringement_overviews %}
         <div class="border border-slate-200 rounded-lg p-3 bg-slate-50">
           <p class="text-sm font-semibold text-slate-900">{{ infringement.infringement_time|default:'-' }}</p>
-          <p class="text-sm text-slate-700 mt-1">May tinh vi pham: {{ infringement.number_of_infringement_computers|default:'-' }}</p>
-          <p class="text-sm text-slate-700">Phan mem: {{ infringement.infringement_softwares|default:'-' }}</p>
+          <p class="text-sm text-slate-700 mt-1">Số máy vi phạm: {{ infringement.number_of_infringement_computers|default:'-' }}</p>
+          <p class="text-sm text-slate-700">Phần mềm: {{ infringement.infringement_softwares|default:'-' }}</p>
           <p class="text-sm text-slate-700">{{ infringement.event_to_quotes|default:'-'|linebreaksbr }}</p>
           <div class="mt-2 flex gap-3">
             <a href="{% url 'infringement_overview_detail' infringement.pk %}" class="text-blue-600 hover:underline text-sm">View</a>
@@ -219,7 +219,7 @@
         {% endfor %}
       </div>
       {% else %}
-      <p class="text-slate-500 italic">Chua co du lieu Infringement Overview cho cong ty nay.</p>
+      <p class="text-slate-500 italic">Chưa có dữ liệu tổng quan vi phạm cho công ty này.</p>
       {% endif %}
     </div>
   </details>
@@ -228,7 +228,7 @@
     <summary class="cursor-pointer list-none p-4 lg:p-6 flex items-center justify-between">
       <span class="flex items-center gap-2">
         <svg class="w-4 h-4 text-slate-500 transition-transform duration-200 group-open:rotate-90 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-lg font-bold text-slate-800">Infringement Detail</span>
+        <span class="text-lg font-bold text-slate-800">Chi tiết vi phạm</span>
       </span>
       <a href="{% url 'infringement_detail_import' company.pk %}" class="px-3 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 text-sm">Import CSV</a>
     </summary>
@@ -274,7 +274,7 @@
         </div>
       </div>
       {% else %}
-      <p class="text-slate-500 italic">Chua co du lieu Infringement Detail. Vui long import CSV.</p>
+      <p class="text-slate-500 italic">Chưa có dữ liệu chi tiết vi phạm. Vui lòng import CSV.</p>
       {% endif %}
     </div>
   </details>

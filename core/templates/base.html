@@ -1,10 +1,12 @@
 {% load tailwind_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Monday{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'icons/favicon.svg' %}">
     {% tailwind_css %}
 </head>
 <body class="bg-slate-100">
@@ -33,23 +35,19 @@
                         <span class="font-medium">Company</span>
                     </a>
                     <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 10c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.255-.949L3 18l1.35-3.6A7.49 7.49 0 013 10c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                        <span class="font-medium">Chats</span>
-                    </a>
-                    <a href="#" onclick="closeMobileMenu()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-200">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h6M6 3h12a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 012-2z"></path></svg>
-                        <span class="font-medium">Documents</span>
+                        <span class="font-medium">Working Process</span>
                     </a>
                 </div>
 
                 <div class="mt-8 border-t border-slate-200 pt-4">
                     <div class="flex items-center justify-between px-2 mb-3">
-                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
+                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Tasks</h3>
                         <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
                     </div>
                     <div class="space-y-2 px-2 text-slate-600 max-h-40 overflow-y-auto pr-1">
-                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
-                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>First task</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Second task</span></div>
                     </div>
                 </div>
             </nav>
@@ -92,12 +90,12 @@
 
                 <div class="mt-8 border-t border-slate-200 pt-4">
                     <div class="flex items-center justify-between px-2 mb-3">
-                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Companies</h3>
+                        <h3 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Tasks</h3>
                         <button class="text-slate-500 hover:text-slate-700 text-lg leading-none">+</button>
                     </div>
                     <div class="space-y-2 px-2 text-slate-600 max-h-40 overflow-y-auto pr-1">
-                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>Event Planning</span></div>
-                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Breakfast Plan</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-fuchsia-300"></span><span>First task</span></div>
+                        <div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-sm bg-emerald-300"></span><span>Second task</span></div>
                     </div>
                 </div>
             </nav>

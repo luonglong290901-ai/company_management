@@ -5,11 +5,11 @@
   <div class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8">
     <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Infringement Detail</h2>
-        <p class="text-sm text-slate-500">Cong ty <strong>{{ company.company_name }}</strong></p>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Chi tiết vi phạm</h2>
+        <p class="text-sm text-slate-500">Công ty <strong>{{ company.company_name }}</strong></p>
       </div>
       <div class="flex gap-2">
-        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm">Back to company</a>
+        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm">Quay lại công ty</a>
       </div>
     </div>
 

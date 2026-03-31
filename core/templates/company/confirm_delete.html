@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="max-w-lg mx-auto bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-slate-200">
-        <h2 class="text-xl lg:text-2xl font-bold text-black mb-3">Confirm Delete</h2>
+        <h2 class="text-xl lg:text-2xl font-bold text-black mb-3">Xác nhận Xóa</h2>
         <p class="mb-4 text-black text-sm lg:text-base">Bạn có chắc muốn xóa công ty <strong>{{ object.company_name }}</strong> không?</p>
         <form method="post">
             {% csrf_token %}

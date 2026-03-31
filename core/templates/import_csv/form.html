@@ -3,10 +3,10 @@
 {% block content %}
 <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <h2 class="text-xl lg:text-2xl font-bold text-slate-800">CSV Import</h2>
-        <p class="text-sm text-slate-600">Cong ty: <strong>{{ company.company_name }}</strong></p>
+        <h2 class="text-xl lg:text-2xl font-bold text-slate-800">Nhập CSV</h2>
+        <p class="text-sm text-slate-600">Công ty: <strong>{{ company.company_name }}</strong></p>
     </div>
-    <a href="{% url 'company_detail' company.pk %}" class="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm">Back to company</a>
+    <a href="{% url 'company_detail' company.pk %}" class="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm">Quay lại công ty</a>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -21,15 +21,15 @@
                 {% endif %}
             </div>
             <div class="rounded-lg bg-slate-50 border border-slate-200 p-3 text-sm text-slate-700">
-                <p class="font-semibold mb-2">Cot dang map (set cung):</p>
+                <p class="font-semibold mb-2">Các cột đang được map:</p>
                 <p class="font-mono text-xs break-words">D:product, E:version, F:release, G:feature_used, W:active_mac, X:mac2, Y:mac3, Z:mac4, AA:system_model, AC:wifi_latitude_longitude, AD:ip_latitude_longitude, AH:public_ip_address, AO:gateway_mac_address, AP:active_wifi_access_point, AY:license_info</p>
             </div>
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm">Import CSV</button>
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm">Nhập CSV</button>
         </form>
     </div>
 
     <div class="rounded-xl bg-white shadow-sm border border-slate-200 p-5">
-        <h3 class="text-base font-semibold text-slate-800 mb-3">Gan day</h3>
+        <h3 class="text-base font-semibold text-slate-800 mb-3">Gần đây</h3>
         <div class="space-y-3">
             {% for item in import_history %}
                 <div class="border border-slate-200 rounded-lg p-3">
@@ -37,7 +37,7 @@
                     <p class="text-xs text-slate-500 mt-1">{{ item.uploaded_at|date:'d/m/Y H:i' }}</p>
                 </div>
             {% empty %}
-                <p class="text-sm text-slate-500">Chua co file nao duoc import.</p>
+                <p class="text-sm text-slate-500">Chưa có file nào được import.</p>
             {% endfor %}
         </div>
     </div>
@@ -46,8 +46,8 @@
 {% if last_import %}
 <div class="mt-6 rounded-xl bg-emerald-50 border border-emerald-200 p-4">
     <p class="text-sm text-emerald-800">
-        File <strong>{{ last_import.original_filename }}</strong> da duoc luu thanh cong.
-        So dong unique da luu: <strong>{{ unique_count }}</strong>
+        File <strong>{{ last_import.original_filename }}</strong> đã được lưu thành công.
+        Số dòng unique đã lưu: <strong>{{ unique_count }}</strong>
     </p>
 </div>
 {% endif %}

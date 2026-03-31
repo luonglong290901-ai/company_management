@@ -5,12 +5,12 @@
   <div class="bg-white rounded-xl lg:rounded-2xl shadow-lg border border-slate-200 p-4 lg:p-8">
     <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Infringement Overview</h2>
-        <p class="text-sm text-slate-500">Chi tiết vi phạm của công ty <strong>{{ company.company_name }}</strong></p>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Tổng quan vi phạm</h2>
+        <p class="text-sm text-slate-500">Tổng quan vi phạm của công ty <strong>{{ company.company_name }}</strong></p>
       </div>
       <div class="flex flex-col sm:flex-row gap-2">
-        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm lg:text-base text-center">Back to company</a>
-        <a href="{% url 'infringement_overview_edit' infringement_overview.pk %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base text-center">Edit</a>
+        <a href="{% url 'company_detail' company.pk %}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 text-sm lg:text-base text-center">Quay lại công ty</a>
+        <a href="{% url 'infringement_overview_edit' infringement_overview.pk %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm lg:text-base text-center">Chỉnh sửa</a>
       </div>
     </div>
 
